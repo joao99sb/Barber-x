@@ -2,20 +2,20 @@ import express, { Express } from 'express';
 import routes from './routes';
 
 class App {
-  public server: Express;
+  server: Express;
 
   constructor() {
     this.server = express();
     this.middlewares();
-    this.routes();
+    this.rotes();
   }
 
-  middlewares(): void {
-    this.server.use(express.json());
-  }
-
-  routes(): void {
+  private rotes(): void {
     this.server.use(routes);
+  }
+
+  private middlewares(): void {
+    this.server.use(express.json());
   }
 }
 

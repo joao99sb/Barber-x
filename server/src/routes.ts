@@ -1,12 +1,14 @@
-import Users from 'app/models/Users';
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
+import UserController from './app/controller/UserController';
+import SessionController from './app/controller/SessionController';
+import authMiddleware from './app/middleware/auth';
 
 const routes = Router();
 
-routes.get('/', async (req, res) => {
-  const userRepo = await getRepository(Users);
-  const user = userRepo.create()
-});
+routes.post('/user', UserController.store);
+routes.post('/session', SessionController.store);
 
+routes.use(authMiddleware);
+
+routes.put('/user', UserController.update);
 export default routes;

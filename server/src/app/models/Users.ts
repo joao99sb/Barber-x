@@ -1,9 +1,9 @@
 import {
-  Column,
   Entity,
+  Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity('users')
@@ -11,7 +11,7 @@ class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ default: 'oi' })
   name: string;
 
   @Column()
@@ -21,7 +21,7 @@ class Users {
   password: string;
 
   @Column()
-  provider: string;
+  provider: boolean;
 
   @CreateDateColumn()
   created_at: Date;
