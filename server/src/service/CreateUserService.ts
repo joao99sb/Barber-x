@@ -22,7 +22,6 @@ class CreateUser {
     }
 
     const hashedPass = await hash(password, 10);
-    console.log(hashedPass);
 
     const user = userRepo.create({
       email,

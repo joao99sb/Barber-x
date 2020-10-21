@@ -20,7 +20,9 @@ class AuthUserService {
     if (!user) {
       throw new Error('email/password fail');
     }
-    const passwordChecked = compare(password, user.password);
+
+    const passwordChecked = await compare(password, user.password);
+
     if (!passwordChecked) {
       throw new Error('email/password fail');
     }

@@ -28,7 +28,7 @@ export default async (
     return data;
   });
   const { id } = (encoded as unknown) as tokenPayload;
-  req.user.id = id;
+  req.user = { id };
 
   return next();
 };
