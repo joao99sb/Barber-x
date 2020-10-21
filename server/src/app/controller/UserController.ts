@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import UpdateUserService from '../../service/UpdateUserService';
 import CreateUserService from '../../service/CreateUserService';
 import VerifyService from '../../service/VerifyService';
