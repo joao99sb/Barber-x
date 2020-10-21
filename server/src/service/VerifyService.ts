@@ -13,7 +13,7 @@ class VerifyService {
           password ? field.required().oneOf([Yup.ref('password')]) : field
       ),
     });
-    if (!(await schema.isValid(req))) {
+    if (!(await schema.isValid(req.body))) {
       throw new Error('validation fail');
     }
   }
@@ -37,7 +37,17 @@ class VerifyService {
       ),
     });
 
-    if (!(await schema.isValid(req))) {
+    if (!(await schema.isValid(req.body))) {
+      throw new Error('validation fail');
+    }
+  }
+
+  public async session(req: Request): Promise<void> {
+    const schema = Yup.object().shape({
+      email: Yup.string().email().required(),
+      password: Yup.string().required(),
+    });
+    if (!(await schema.isValid(req.body))) {
       throw new Error('validation fail');
     }
   }

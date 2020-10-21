@@ -6,7 +6,7 @@ import VerifyService from '../../service/VerifyService';
 class UserController {
   public async store(req: Request, res: Response): Promise<Response> {
     try {
-      await VerifyService.create(req.body);
+      await VerifyService.create(req);
 
       const { name, email, password, provider = false } = req.body;
       const createuser = new CreateUserService();
@@ -26,7 +26,7 @@ class UserController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      await VerifyService.update(req.body);
+      await VerifyService.update(req);
 
       const { email, oldPassword, password, name } = req.body;
       const updateUser = new UpdateUserService();
