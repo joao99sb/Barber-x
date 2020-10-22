@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import UpdateUserService from '../../service/UpdateUserService';
 import CreateUserService from '../../service/CreateUserService';
 import VerifyService from '../../service/VerifyService';
+import AvatarService from '../../service/AvatarService';
 
 class UserController {
   public async store(req: Request, res: Response): Promise<Response> {
@@ -43,6 +44,21 @@ class UserController {
       return res.json(user);
     } catch (err) {
       return res.status(400).json({ error: err.message });
+    }
+  }
+
+  public async avatarFile(req: Request, res: Response): Promise<Response> {
+    try {
+      const userAvatar = new AvatarService();
+
+      const user = await userAvatar.execute({
+        userId: req.user.id,
+        avatarFilename: req.file.filename,
+      });
+
+      return res.json(user);
+    } catch (err) {
+      return res.json({ error: err });
     }
   }
 }

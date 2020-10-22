@@ -8,7 +8,7 @@ interface Request {
   password: string;
   provider?: boolean;
 }
-class CreateUser {
+export default class CreateUser {
   public async execute({
     email,
     name,
@@ -35,4 +35,3 @@ class CreateUser {
     return user;
   }
 }
-export default CreateUser;

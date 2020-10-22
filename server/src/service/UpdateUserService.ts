@@ -10,7 +10,7 @@ interface Request {
   password?: string;
 }
 
-class UpdateUserService {
+export default class UpdateUserService {
   public async execute({
     userId,
     name,
@@ -52,5 +52,3 @@ class UpdateUserService {
     return user;
   }
 }
-
-export default UpdateUserService;

@@ -11,7 +11,7 @@ class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ default: 'oi' })
+  @Column()
   name: string;
 
   @Column()
@@ -22,6 +22,9 @@ class Users {
 
   @Column()
   provider: boolean;
+
+  @Column()
+  avatar: string;
 
   @CreateDateColumn()
   created_at: Date;
