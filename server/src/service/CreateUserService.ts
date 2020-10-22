@@ -31,7 +31,7 @@ export default class CreateUser {
     });
 
     await userRepo.save(user);
-    delete user.password;
+
     return user;
   }
 }

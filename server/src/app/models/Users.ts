@@ -5,6 +5,8 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
 } from 'typeorm';
+import path from 'path';
+import { Expose, Exclude } from 'class-transformer';
 
 @Entity('users')
 class Users {
@@ -17,6 +19,7 @@ class Users {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
@@ -31,6 +34,15 @@ class Users {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatarUrl' })
+  getAvatarUrl(): string | null {
+    if (!this.avatar) return null;
+
+    const filePath = path.resolve(__dirname, '..', '..', '..', 'tmp');
+    const imgPath = path.join(filePath, this.avatar);
+    return imgPath;
+  }
 }
 
 export default Users;

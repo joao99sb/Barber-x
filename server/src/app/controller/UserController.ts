@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 import UpdateUserService from '../../service/UpdateUserService';
 import CreateUserService from '../../service/CreateUserService';
 import VerifyService from '../../service/VerifyService';
@@ -19,7 +20,7 @@ class UserController {
         provider,
       });
 
-      return res.json(user);
+      return res.json(classToClass(user));
     } catch (err) {
       return res.status(400).json({ error: err.message });
     }
@@ -41,7 +42,7 @@ class UserController {
         password,
         name,
       });
-      return res.json(user);
+      return res.json(classToClass(user));
     } catch (err) {
       return res.status(400).json({ error: err.message });
     }
@@ -56,7 +57,7 @@ class UserController {
         avatarFilename: req.file.filename,
       });
 
-      return res.json(user);
+      return res.json(classToClass(user));
     } catch (err) {
       return res.json({ error: err });
     }

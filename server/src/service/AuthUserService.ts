@@ -30,7 +30,7 @@ class AuthUserService {
     const token = jwt.sign({ id: user.id }, authConfig.secret, {
       expiresIn: authConfig.expiresIn,
     });
-    delete user.password;
+
     return {
       user,
       token,

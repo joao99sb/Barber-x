@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 import VerifyService from '../../service/VerifyService';
 import AuthUserService from '../../service/AuthUserService';
 
@@ -11,7 +12,7 @@ class SessionController {
       const authenticateUser = new AuthUserService();
       const response = await authenticateUser.execute({ email, password });
 
-      return res.json(response);
+      return res.json(classToClass(response));
     } catch (err) {
       return res.status(401).json({ error: err.message });
     }
