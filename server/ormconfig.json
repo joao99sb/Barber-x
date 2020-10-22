@@ -4,7 +4,7 @@
   "port":5432,
   "username":"postgres",
   "password":"1234",
-  "database":"gostack",
+  "database":"barberx",
   "entities":[
     "./src/app/models/*ts"
   ],

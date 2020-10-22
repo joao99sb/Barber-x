@@ -9,7 +9,7 @@ import path from 'path';
 import { Expose, Exclude } from 'class-transformer';
 
 @Entity('users')
-class Users {
+export default class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -44,5 +44,3 @@ class Users {
     return imgPath;
   }
 }
-
-export default Users;
