@@ -1,16 +1,16 @@
 import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
-import Users from '../app/models/Users';
-import uploadConfig from '../config/uploads';
+import uploadConfig from '@config/uploads';
+import Users from '../infra/typeorm/entities/Users';
 
-interface Request {
+interface IRequest {
   userId: string;
   avatarFilename: string;
 }
 
 export default class AvatarService {
-  public async execute({ userId, avatarFilename }: Request): Promise<Users> {
+  public async execute({ userId, avatarFilename }: IRequest): Promise<Users> {
     const userRepo = getRepository(Users);
 
     const user = await userRepo.findOne({ where: { id: userId } });

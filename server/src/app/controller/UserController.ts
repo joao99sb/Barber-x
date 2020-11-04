@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
-import UpdateUserService from '../../service/UpdateUserService';
-import CreateUserService from '../../service/CreateUserService';
-import VerifyService from '../../service/VerifyService';
-import AvatarService from '../../service/AvatarService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import VerifyService from '@shared/services/VerifyService';
+import AvatarService from '@modules/users/services/AvatarService';
 
 class UserController {
   public async store(req: Request, res: Response): Promise<Response> {

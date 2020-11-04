@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
-import VerifyService from '../../service/VerifyService';
-import AuthUserService from '../../service/AuthUserService';
+import AuthUserService from '@modules/users/services/AuthUserService';
+import VerifyService from '@shared/services/VerifyService';
 
 class SessionController {
   public async store(req: Request, res: Response): Promise<Response> {

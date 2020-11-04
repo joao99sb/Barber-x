@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import Users from '../app/models/Users';
+import Users from '@modules/users/infra/typeorm/entities/Users';
 
-interface Request {
+interface IRequest {
   email: string;
   name: string;
   password: string;
@@ -14,7 +14,7 @@ export default class CreateUser {
     name,
     password,
     provider,
-  }: Request): Promise<Users> {
+  }: IRequest): Promise<Users> {
     const userRepo = getRepository(Users);
     const checkUser = await userRepo.findOne({ where: { email } });
     if (checkUser) {
