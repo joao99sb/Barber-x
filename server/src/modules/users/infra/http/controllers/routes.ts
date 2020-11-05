@@ -1,13 +1,13 @@
 import { Router } from 'express';
 
 import multer from 'multer';
-import multerConfig from '../../../config/uploads';
+import SessionController from '@modules/users/infra/http/controllers/SessionController';
+import ProviderController from '@modules/users/infra/http/controllers/ProviderController';
+import multerConfig from '../../../../../config/uploads';
 
-import UserController from '../../../app/controller/UserController';
-import SessionController from '../../../app/controller/SessionController';
-import ProviderController from '../../../app/controller/ProviderController';
+import UserController from './UserController';
 
-import authMiddleware from './middleware/auth';
+import authMiddleware from '../../../../../shared/infra/http/middleware/auth';
 
 const upload = multer(multerConfig);
 

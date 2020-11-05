@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
+
+import { container } from 'tsyringe';
+
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import VerifyService from '@shared/services/VerifyService';
@@ -11,7 +14,7 @@ class UserController {
       await VerifyService.create(req);
 
       const { name, email, password, provider = false } = req.body;
-      const createuser = new CreateUserService();
+      const createuser = container.resolve(CreateUserService);
 
       const user = await createuser.execute({
         name,
@@ -50,7 +53,7 @@ class UserController {
 
   public async avatarFile(req: Request, res: Response): Promise<Response> {
     try {
-      const userAvatar = new AvatarService();
+      const userAvatar = container.resolve(AvatarService);
 
       const user = await userAvatar.execute({
         userId: req.user.id,

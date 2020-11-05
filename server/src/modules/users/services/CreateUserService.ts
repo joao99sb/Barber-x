@@ -1,6 +1,7 @@
-import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import Users from '@modules/users/infra/typeorm/entities/Users';
+
+import IUserRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   email: string;
@@ -9,28 +10,27 @@ interface IRequest {
   provider?: boolean;
 }
 export default class CreateUser {
+  constructor(private userRepository: IUserRepository) {}
+
   public async execute({
     email,
     name,
     password,
     provider,
   }: IRequest): Promise<Users> {
-    const userRepo = getRepository(Users);
-    const checkUser = await userRepo.findOne({ where: { email } });
+    const checkUser = await this.userRepository.findByEmail(email);
     if (checkUser) {
       throw new Error('email in use');
     }
 
     const hashedPass = await hash(password, 10);
 
-    const user = userRepo.create({
+    const user = await this.userRepository.create({
       email,
       password: hashedPass,
       name,
       provider,
     });
-
-    await userRepo.save(user);
 
     return user;
   }

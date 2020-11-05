@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import routes from './routes';
+import routes from '../../../modules/users/infra/http/controllers/routes';
 
 class App {
   server: Express;

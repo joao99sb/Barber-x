@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
+
+import { container } from 'tsyringe';
+
 import AuthUserService from '@modules/users/services/AuthUserService';
 import VerifyService from '@shared/services/VerifyService';
 
@@ -9,7 +12,7 @@ class SessionController {
       await VerifyService.session(req);
 
       const { email, password } = req.body;
-      const authenticateUser = new AuthUserService();
+      const authenticateUser = container.resolve(AuthUserService);
       const response = await authenticateUser.execute({ email, password });
 
       return res.json(classToClass(response));
