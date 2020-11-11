@@ -1,6 +1,9 @@
-import { getRepository } from 'typeorm';
 import { compare, hash } from 'bcryptjs';
+import { inject, injectable } from 'tsyringe';
+
 import Users from '@modules/users/infra/typeorm/entities/Users';
+
+import IUserRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   userId?: string;
@@ -10,7 +13,13 @@ interface IRequest {
   password?: string;
 }
 
+@injectable()
 export default class UpdateUserService {
+  constructor(
+    @inject('UsersRepository')
+    private userRepository: IUserRepository
+  ) {}
+
   public async execute({
     userId,
     name,
@@ -18,25 +27,27 @@ export default class UpdateUserService {
     email,
     oldPassword,
   }: IRequest): Promise<Users> {
-    const userRepo = getRepository(Users);
-    const user = await userRepo.findOne({ where: { id: userId } });
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       throw new Error('User not found');
     }
+
     if (email && email !== user.email) {
-      const checkEmail = await userRepo.findOne({ where: email });
+      const checkEmail = await this.userRepository.findByEmail(email);
+
       if (checkEmail) {
         throw new Error('email in use');
       }
+      user.email = email;
+    }
+    if (name) {
+      user.name = name;
     }
 
-    user.name = name;
-    user.email = email;
-
-    if (!oldPassword && password) {
-      throw new Error('You should provide old password');
-    }
+    // if (!oldPassword && password) {
+    //   throw new Error('You should provide old password');
+    // }
     if (oldPassword && password) {
       const checkPassword = await compare(oldPassword, user.password);
       if (oldPassword && !checkPassword) {
@@ -45,10 +56,10 @@ export default class UpdateUserService {
       if (oldPassword === password) {
         throw new Error('enter a different password than the previous one');
       }
-
       user.password = await hash(password, 10);
     }
-    userRepo.save(user);
+
+    this.userRepository.save(user);
     return user;
   }
 }

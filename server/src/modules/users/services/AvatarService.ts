@@ -16,7 +16,7 @@ interface IRequest {
 @injectable()
 export default class AvatarService {
   constructor(
-    @inject('UserRepository')
+    @inject('UsersRepository')
     private userRepository: IUserRepository
   ) {}
 
@@ -28,6 +28,7 @@ export default class AvatarService {
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
+
       const userAvatarCheck = await fs.promises.stat(userAvatarFilePath);
 
       if (userAvatarCheck) {

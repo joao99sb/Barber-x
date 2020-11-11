@@ -14,6 +14,7 @@ class UserController {
       await VerifyService.create(req);
 
       const { name, email, password, provider = false } = req.body;
+
       const createuser = container.resolve(CreateUserService);
 
       const user = await createuser.execute({
@@ -31,10 +32,10 @@ class UserController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      await VerifyService.update(req);
+      // await VerifyService.update(req);
 
       const { email, oldPassword, password, name } = req.body;
-      const updateUser = new UpdateUserService();
+      const updateUser = container.resolve(UpdateUserService);
 
       const userId = req.user.id;
 

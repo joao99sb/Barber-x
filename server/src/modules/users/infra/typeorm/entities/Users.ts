@@ -39,7 +39,15 @@ export default class Users {
   getAvatarUrl(): string | null {
     if (!this.avatar) return null;
 
-    const filePath = path.resolve(__dirname, '..', '..', '..', 'tmp');
+    const filePath = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      '..',
+      '..',
+      'tmp'
+    );
     const imgPath = path.join(filePath, this.avatar);
     return imgPath;
   }
