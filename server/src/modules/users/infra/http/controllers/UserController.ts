@@ -32,8 +32,6 @@ class UserController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      // await VerifyService.update(req);
-
       const { email, oldPassword, password, name } = req.body;
       const updateUser = container.resolve(UpdateUserService);
 

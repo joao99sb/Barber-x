@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 
-interface tokenPayload {
+interface ITokenPayload {
   id: string;
   iat: Date;
   exp: Date;
@@ -27,7 +27,7 @@ export default async (
 
     return data;
   });
-  const { id } = (encoded as unknown) as tokenPayload;
+  const { id } = (encoded as unknown) as ITokenPayload;
   req.user = { id };
 
   return next();
