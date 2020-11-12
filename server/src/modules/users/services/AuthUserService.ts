@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import { inject, injectable } from 'tsyringe';
-
+import AppError from '@shared/errors/AppError';
 import authConfig from '@config/auth';
 
 import Users from '../infra/typeorm/entities/Users';
@@ -27,13 +27,13 @@ class AuthUserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error('email/password fail');
+      throw new AppError('email/password fail', 401);
     }
 
     const passwordChecked = await compare(password, user.password);
 
     if (!passwordChecked) {
-      throw new Error('email/password fail');
+      throw new AppError('email/password fail', 401);
     }
 
     const token = jwt.sign({ id: user.id }, authConfig.secret, {

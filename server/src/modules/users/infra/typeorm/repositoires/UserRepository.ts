@@ -35,6 +35,22 @@ class UsersRepository implements IUserrepository {
 
     return user;
   }
+
+  public async findProvider(id: string): Promise<Users> {
+    const provider = await this.ormRepository.findOne({
+      where: { id },
+    });
+
+    return provider;
+  }
+
+  public async findAllProviders(): Promise<Users[]> {
+    const provider = await this.ormRepository.find({
+      where: { provider: true },
+    });
+
+    return provider;
+  }
 }
 
 export default UsersRepository;

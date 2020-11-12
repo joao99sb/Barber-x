@@ -15,9 +15,9 @@ class UserController {
 
       const { name, email, password, provider = false } = req.body;
 
-      const createuser = container.resolve(CreateUserService);
+      const createUser = container.resolve(CreateUserService);
 
-      const user = await createuser.execute({
+      const user = await createUser.execute({
         name,
         email,
         password,
@@ -26,7 +26,7 @@ class UserController {
 
       return res.json(classToClass(user));
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(err.statusCode).json({ error: err.message });
     }
   }
 
@@ -46,7 +46,7 @@ class UserController {
       });
       return res.json(classToClass(user));
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(err.statusCode).json({ error: err.message });
     }
   }
 
@@ -61,7 +61,7 @@ class UserController {
 
       return res.json(classToClass(user));
     } catch (err) {
-      return res.json({ error: err });
+      return res.status(err.statusCode).json({ error: err });
     }
   }
 }

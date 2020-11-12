@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import uploadConfig from '@config/uploads';
 
+import AppError from '@shared/errors/AppError';
 import Users from '@modules/users/infra/typeorm/entities/Users';
 
 import IUserRepository from '../repositories/IUsersRepository';
@@ -23,7 +24,7 @@ export default class AvatarService {
   public async execute({ userId, avatarFilename }: IRequest): Promise<Users> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
-      throw new Error('Only authenticated users can change avatar');
+      throw new AppError('Only authenticated users can change avatar', 401);
     }
 
     if (user.avatar) {

@@ -17,7 +17,7 @@ class SessionController {
 
       return res.json(classToClass(response));
     } catch (err) {
-      return res.status(401).json({ error: err.message });
+      return res.status(err.statusCode).json({ error: err.message });
     }
   }
 }

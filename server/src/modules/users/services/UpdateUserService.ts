@@ -3,6 +3,8 @@ import { inject, injectable } from 'tsyringe';
 
 import Users from '@modules/users/infra/typeorm/entities/Users';
 
+import AppError from '@shared/errors/AppError';
+
 import IUserRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
@@ -30,14 +32,14 @@ export default class UpdateUserService {
     const user = await this.userRepository.findById(userId);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new AppError('User not found', 404);
     }
 
     if (email && email !== user.email) {
       const checkEmail = await this.userRepository.findByEmail(email);
 
       if (checkEmail) {
-        throw new Error('email in use');
+        throw new AppError('email in use');
       }
       user.email = email;
     }
@@ -51,10 +53,10 @@ export default class UpdateUserService {
     if (oldPassword && password) {
       const checkPassword = await compare(oldPassword, user.password);
       if (oldPassword && !checkPassword) {
-        throw new Error('Password does not match');
+        throw new AppError('Password does not match', 401);
       }
       if (oldPassword === password) {
-        throw new Error('enter a different password than the previous one');
+        throw new AppError('enter a different password than the previous one');
       }
       user.password = await hash(password, 10);
     }

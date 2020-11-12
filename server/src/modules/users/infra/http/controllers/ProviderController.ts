@@ -1,16 +1,19 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
-import Users from '@modules/users/infra/typeorm/entities/Users';
+
+import FindAllProvidersService from '@modules/users/services/FindAllProvidersService';
 
 class ProviderController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const userRepo = getRepository(Users);
-    const providers = await userRepo.find({
-      where: { provider: true },
-    });
+    try {
+      const providersRepo = container.resolve(FindAllProvidersService);
+      const providers = await providersRepo.execute();
 
-    return res.json(classToClass(providers));
+      return res.json(classToClass(providers));
+    } catch (err) {
+      return res.status(err.statusCode).json({ error: err.message });
+    }
   }
 }
 export default new ProviderController();

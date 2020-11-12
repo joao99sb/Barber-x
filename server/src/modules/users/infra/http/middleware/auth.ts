@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+import AppError from '@shared/errors/AppError';
 import authConfig from '@config/auth';
 
 interface ITokenPayload {
@@ -22,7 +23,7 @@ export default async (
 
   const encoded = jwt.verify(token, authConfig.secret, (err, data) => {
     if (err) {
-      return res.status(400).json({ err });
+      throw new AppError(err.message, 400);
     }
 
     return data;
